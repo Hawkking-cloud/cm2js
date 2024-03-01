@@ -27,7 +27,6 @@ export class Save {
     blocks=[];
     wires=[];
     addBlock(block) {
-        console.log(block);
         if (block instanceof Block) {
             this.blocks.push(block);
         } else {
