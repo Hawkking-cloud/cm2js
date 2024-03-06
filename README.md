@@ -1,13 +1,22 @@
-# cm2js
-cm2js is a javascript registry manipulator for the roblox game Circuit Maker 2
+# CM2js v1.1
+CM2js is a javascript registry manipulator for the roblox game Circuit Maker 2
 
 [Classes](#classes)
 
 [Hawks Discord](https://discord.com/users/586638458097893378)
 
-
 [Functions](#functions)
+
+
 # Classes
+[Block](#block)
+
+[Wire](#wire)
+
+[Save](#save)
+
+[Vector](#v)
+
 ## Block
 This defines a block that the save class can add
 ```js
@@ -63,6 +72,24 @@ newSave.addWire(newWire);
 console.log(newSave.export());
 ```
 ## Save
+[addBlock](#addBlock)
+
+[addBlockList](#addBlockList)
+
+[findBlock](#findBlock)
+
+[addWire2](#addWire2)
+
+[removeBlock](#removeBlock)
+
+[addWire](#addWire)
+
+[removeWire](#removeWire)
+
+[export](#export)
+
+[import](#import)
+
 This defines a save that you can pick from a variety of functions to do
 ### addBlock()
 Adds a block to the save
@@ -76,6 +103,64 @@ const newLED = new cm2js.Block(cm2js.v(2,0,0),6)
 
 //Adds the LED to the save
 newSave.addBlock(newLED);
+
+//Prints the exported save
+console.log(newSave.export());
+```
+### addBlockList()
+Adds a list of Blocks to the save
+```js
+import * as cm2js from './cm2js.js';
+
+//Defines a Save
+const newSave = new cm2js.Save;
+
+//Define 2 LEDS
+const newLED = new Block(v(0,0,0),6);
+const newLED2 = new Block(v(0,0,1),6);
+
+//Add both of the LEDS in one line
+newSave.addBlockList([newLED,newLED2]);
+
+//Prints the exported save
+console.log(newSave.export());
+```
+### findBlock()
+Checks for a block in a save based on a vector
+```js
+import * as cm2js from './cm2js.js';
+
+//Defines a Save
+const newSave = new cm2js.Save;
+
+//Define 2 LEDS
+const newLED = new Block(v(0,0,0),6);
+const newLED2 = new Block(v(0,0,1),6);
+
+
+//Define a wire that wires 2 LEDs together using findBlock()
+const newWire = new Wire(newSave.findBlock(v(0,0,0)),newSave.findBlock(v(0,0,1)))
+
+//Add the wire
+newSave.addWire(newWire);
+
+//Prints the exported save
+console.log(newSave.export());
+```
+### addWire2()
+Adds a wire to the save based on 2 block inputs 
+```js
+import * as cm2js from './cm2js.js';
+
+//Defines a Save
+const newSave = new cm2js.Save;
+
+//Define 2 LEDS
+const newLED = new Block(v(0,0,0),6);
+const newLED2 = new Block(v(0,0,1),6);
+
+//Add the wire
+newSave.addWire2(newLED,newLED2);
 
 //Prints the exported save
 console.log(newSave.export());

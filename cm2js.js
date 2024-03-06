@@ -1,4 +1,6 @@
-/* 
+/*
+your currently using CM2js v1.1
+
 --
 CM2JS SOURCE CODE
 --
@@ -33,6 +35,25 @@ export class Save {
             console.log('CM2JS Error: Tried to use save.addBlock() when the instance isn\'t a Block');
         }
     }
+    addBlockList(list) {
+        for (let i = 0; i < list.length; i++) {
+            const block = list[i]
+            if (block instanceof Block) {
+                this.blocks.push(block);
+            } else {
+                console.log('CM2JS Error: Tried to use save.addBlock() when the instance isn\'t a Block');
+            }
+        }
+    }
+    findBlock(v){
+        for (let i = 0; i < this.blocks.length; i++) {
+            const p = this.blocks[i].position
+            if(p.x==v.x&&p.y==v.y&&p.z==v.z){ 
+                return this.blocks[i]
+            }
+        }
+        console.log('CM2JS Error: Tried to use save.findBlock(), Couldnt find block XYZ: '+v.x+', '+v.y+', '+v.z);
+    }
     removeBlock(block) {
         if (block instanceof Block) {
             const index = this.blocks.indexOf(block);
@@ -50,6 +71,19 @@ export class Save {
             this.wires.push(wire);
         } else {
             console.log('CM2JS Error: Tried to use save.addWire() when the instance isn\'t a Wire');
+        }
+    }
+    addWire2(block1,block2) {
+                    
+        if(block1 instanceof Block){
+            if(block2 instanceof Block){
+                const newWire = new Wire(block1,block2);
+                this.wires.push(newWire);
+            } else {
+                console.log('CM2JS Error: Tried to use save.addWire2() when block2 isnt a Block');
+            }
+        } else {
+            console.log('CM2JS Error: Tried to use save.addWire2() when block1 isnt a Block');
         }
     }
     removeWire(wire) {
