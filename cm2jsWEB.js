@@ -10,6 +10,8 @@ need help?
 you can dm hawk at any time!
 https://discord.com/users/586638458097893378
 */
+
+// cm2js WEB is a version of cm2js contained in a dictionary
 const cm2js= {
     Block: class {
         constructor(position, id) {
@@ -25,11 +27,11 @@ const cm2js= {
             this.block2=block2;
         }
     },
-    Save : class {
+    Save: class {
         blocks=[];
         wires=[];
         addBlock(block) {
-            if (block instanceof Block) {
+            if (block instanceof cm2js.Block) {
                 this.blocks.push(block);
             } else {
                 console.log('CM2JS Error: Tried to use save.addBlock() when the instance isn\'t a Block');
@@ -38,7 +40,7 @@ const cm2js= {
         addBlockList(list) {
             for (let i = 0; i < list.length; i++) {
                 const block = list[i]
-                if (block instanceof Block) {
+                if (block instanceof cm2js.Block) {
                     this.blocks.push(block);
                 } else {
                     console.log('CM2JS Error: Tried to use save.addBlock() when the instance isn\'t a Block');
@@ -55,7 +57,7 @@ const cm2js= {
             console.log('CM2JS Error: Tried to use save.findBlock(), Couldnt find block XYZ: '+v.x+', '+v.y+', '+v.z);
         }
         removeBlock(block) {
-            if (block instanceof Block) {
+            if (block instanceof cm2js.Block) {
                 const index = this.blocks.indexOf(block);
                 if (index !== -1) {
                 this.blocks.splice(index, 1);
@@ -67,7 +69,7 @@ const cm2js= {
             }
         }      
         addWire(wire) {
-            if (wire instanceof Wire) {
+            if (wire instanceof cm2js.Wire) { 
                 this.wires.push(wire);
             } else {
                 console.log('CM2JS Error: Tried to use save.addWire() when the instance isn\'t a Wire');
@@ -75,9 +77,9 @@ const cm2js= {
         }
         addWire2(block1,block2) {
                         
-            if(block1 instanceof Block){
-                if(block2 instanceof Block){
-                    const newWire = new Wire(block1,block2);
+            if(block1 instanceof cm2js.Block){
+                if(block2 instanceof cm2js.Block){
+                    const newWire = new cm2js.Wire(block1,block2);
                     this.wires.push(newWire);
                 } else {
                     console.log('CM2JS Error: Tried to use save.addWire2() when block2 isnt a Block');
@@ -87,7 +89,7 @@ const cm2js= {
             }
         }
         removeWire(wire) {
-            if (wire instanceof Wire) {
+            if (wire instanceof cm2js.Wire) {
                 const index = this.wires.indexOf(wire);
                 if (index !== -1) {
                 this.wires.splice(index, 1);
@@ -126,7 +128,7 @@ const cm2js= {
             for (let i = 0; i < blocktext.split(';').length; i++) {
                 const b = blocktext.split(';')[i]
                 const params = b.split(',')
-                const newblock = new Block({x:parseFloat(params[2])+offset.x,y:parseFloat(params[3])+offset.y,z:parseFloat(params[4])+offset.z},params[0]);
+                const newblock = new cm2js.Block({x:parseFloat(params[2])+offset.x,y:parseFloat(params[3])+offset.y,z:parseFloat(params[4])+offset.z},params[0]);
                 let on = params[1]==1 ? 1 : 0; 
                 newblock.on=on;
                 newblock.specialValue=params[5];
@@ -137,14 +139,14 @@ const cm2js= {
                 const b1 = wiretext.split(';')[i].split(',')[0];
                 const b2 = wiretext.split(';')[i].split(',')[1]
                 if(this.blocks[parseInt(b1)+newindex-1]&&this.blocks[parseInt(b2)+newindex-1]){
-                    this.wires.push(new Wire(this.blocks[parseInt(b1)+newindex-1],this.blocks[parseInt(b2)+newindex-1]))
+                    this.wires.push(new cm2js.Wire(this.blocks[parseInt(b1)+newindex-1],this.blocks[parseInt(b2)+newindex-1]))
                 } else {
                     console.log('CM2JS Error: save.import() error - Wire ('+(parseInt(b1)+newindex)+','+(parseInt(b2)+newindex)+') Could not be found');
                 }
             }
         }
     },
-    v : function v(x,y,z){
+    v: function v(x,y,z){
         return {x:x,y:y,z:z}
     }
 }
